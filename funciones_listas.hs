@@ -57,7 +57,7 @@ maximum' (x:xs)
 
 sum' :: Num p => [p] -> p
 sum' [] = 0
-sum' (x:xs) = x + (sum xs)  
+sum' (x:xs) = x + (sum' xs)  
 
 product' :: Num p => [p] -> p
 product' [] = 1
