@@ -12,7 +12,6 @@ infinitosFibonacci = 1:(fib 0 1)
 
 -- Implementación función mod
 mod' :: Int -> Int -> Int
-
 mod' a b
  | diferencia == 0 = 0
  | diferencia == b = 0
