@@ -1,6 +1,12 @@
 
 -- Secuencia de números primos
--- primos = 1 : [ a | a <- [1,2..], b <- [1,2..(a-1)], mod a b == 0] 
+
+esPrimo a = [ if mod a b /= 0 then False else True |  b <- [2,3..(a-1)] ] 
+esBool [] = False
+esBool (a:arr) = a || ( esBool arr )
+primos = 1:[ x | x <- [2,3..], (esBool (esPrimo x)) == False ]
+
+
 
 -- Secuencia infinita de números de fibonacci
 fib :: Integral t => t -> t -> [t]
