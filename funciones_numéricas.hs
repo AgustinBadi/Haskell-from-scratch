@@ -14,7 +14,7 @@ infinitosFibonacci :: [Integer]
 
 fib a b = let suma = a + b in suma:(fib b suma)   
 infinitosFibonacci = 1:(fib 0 1)
-
+-- infFibs = 0 : 1 : zipWith (+) infFibs ( tail infFibs)
 
 -- Implementación función mod
 mod' :: Int -> Int -> Int
@@ -38,4 +38,5 @@ abs' [] = []
 abs' (a:arr)
  | a < 0 = a * (-1) : ( abs' arr)
  | a > 0 = a : (abs' arr)
+
 

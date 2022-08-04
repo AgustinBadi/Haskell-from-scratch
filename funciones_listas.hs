@@ -31,8 +31,8 @@ null' xs = if (length' xs) == 0 then True else False
 
 -- Retorna una cantidad n de elementos de la lista
 take' :: Int -> [a] -> [a]
+take' _ [] = []
 take' a xs = let indice = a -1 in [ xs !! y | y <- [0..indice] ] 
--- Tira una excepción con indices muy largos, arreglar.
 
 
 -- Retorna la lista excepto el primer elemento
