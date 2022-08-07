@@ -95,6 +95,8 @@ repeat' x = [x,x..x]
 replicate' :: (Num t, Enum t) => t -> a -> [a]
 replicate' a x = [x | _ <- [1..a] ]
 
+-- Elimina solo el primer elemento de una lista que corresponda a x
+delete' a (x:xs) = if a /= x then x:(delete' a xs) else xs
 
 
 
