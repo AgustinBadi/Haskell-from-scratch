@@ -102,5 +102,6 @@ delete' a (x:xs) = if a == x then xs else x:(delete' a xs)
 -- delete' a (x:xs) = if a /= x then x:(delete' a xs) else xs
 
 -- Aplica una función a una lista
+map' :: (t -> a) -> [t] -> [a]
 map' f lst = [ f x | x <- lst ]
 
