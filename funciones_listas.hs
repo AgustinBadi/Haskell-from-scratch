@@ -105,3 +105,18 @@ delete' a (x:xs) = if a == x then xs else x:(delete' a xs)
 map' :: (t -> a) -> [t] -> [a]
 map' f lst = [ f x | x <- lst ]
 
+-- Sobre los elementos respectivos de dos listas aplica una función
+zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]
+zipWith' f [] _ = []
+zipWith' f _ [] = []
+zipWith' f (x:xs) (y:ys) = ( f x y ):(zipWith' f xs ys )
+
+-- De una función gira el orden de los argumentos
+flip' :: (a -> b -> c) -> b -> a -> c
+flip' f a b = f b a 
+
+-- Filtra los elementos de una lista que cumplen determinada condición de verdad (Bool)
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' f lst = [ x | x <- lst, f x ] 
+
+
