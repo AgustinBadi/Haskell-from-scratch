@@ -117,6 +117,13 @@ flip' f a b = f b a
 
 -- Filtra los elementos de una lista que cumplen determinada condición de verdad (Bool)
 filter' :: (a -> Bool) -> [a] -> [a]
+filter' _ [] = [] 
 filter' f lst = [ x | x <- lst, f x ] 
+
+-- Retorna los elementos de la lista hasta que una condición deje de ser verdadera
+takeWhile' :: (a -> Bool) -> [a] -> [a]
+takeWhile' f (x:xs) = if f x then x:takeWhile' f xs else []
+
+
 
 
