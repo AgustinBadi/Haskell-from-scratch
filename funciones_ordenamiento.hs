@@ -101,13 +101,19 @@ mergeSort lst = merge [(mergeSort xs),(mergeSort ys)]
 
 
 
+-- Quick Sort
+-- Explicación: https://www.youtube.com/watch?v=Hoixgm4-P4M
+
+quickSort [] = []
+quickSort [x] = [x]
+quickSort (x:xs) = quickSort (filter (<=x) xs) ++ [x] ++ quickSort (filter (>x) xs) 
+
+
 -- Heap Sort()
 -- Explicación: https://www.youtube.com/watch?v=2DmK_H7IdTo
 
 
 
--- Quick Sort
--- Explicación: https://www.youtube.com/watch?v=Hoixgm4-P4M
 
 
 
