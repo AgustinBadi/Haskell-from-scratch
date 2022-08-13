@@ -17,6 +17,23 @@ swapCoordenadas lst x y = [if a == x then lst !! y else (if a == y then lst !! x
 
 
 
+-- Insertion Sort
+-- Explicación: https://www.youtube.com/watch?v=JU767SDMDvA
+
+isort a [] = [a]
+isort a (x:xs)
+ | a <= x = a:x:xs
+ | otherwise = x:(isort a xs)
+
+insertion (xs,[]) = xs
+insertion (xs,ys)
+ | last xs <= head ys = insertion ( xs ++ [head ys], tail ys)
+ | last xs > head ys = insertion ((isort (head ys) xs), tail ys) 
+
+insertionSort (x:xs) = insertion ([x],xs)
+
+
+
 -- Selection Sort
 -- Explicación: https://www.youtube.com/watch?v=g-PGLbMth_g
 
@@ -47,23 +64,6 @@ selectionSort lst = let actual = ssort lst in (head actual):(selectionSort (tail
 
 
 
--- Insertion Sort
--- Explicación: https://www.youtube.com/watch?v=JU767SDMDvA
-
-isort a [] = [a]
-isort a (x:xs)
- | a <= x = a:x:xs
- | otherwise = x:(isort a xs)
-
-insertion (xs,[]) = xs
-insertion (xs,ys)
- | last xs <= head ys = insertion ( xs ++ [head ys], tail ys)
- | last xs > head ys = insertion ((isort (head ys) xs), tail ys) 
-
-insertionSort (x:xs) = insertion ([x],xs)
-
-
-
 -- Bubble Sort
 -- Explicación: https://www.youtube.com/watch?v=xli_FI7CuzA
  
@@ -84,15 +84,31 @@ bubbleSort' lst = bsort lst 0
 -- Merge Sort
 -- Explicación: https://www.youtube.com/watch?v=4VqmGXwpLqc
 
+split [] = [[],[]]
+split lst = [take mitad lst, drop mitad lst]
+     where mitad = div (length lst) 2
+
+merge [y,[]] = y
+merge [[],x] = x
+merge [ parteA@(x:xs), parteB@(y:ys) ]
+ | x <= y = x : merge [xs, parteB]
+ | otherwise = y : merge [parteA, ys]
+
+mergeSort [] = []
+mergeSort [x] = [x]
+mergeSort lst = merge [(mergeSort xs),(mergeSort ys)] 
+      where [xs,ys] = split lst
 
 
--- Heap Sort
+
+-- Heap Sort()
 -- Explicación: https://www.youtube.com/watch?v=2DmK_H7IdTo
 
 
 
 -- Quick Sort
 -- Explicación: https://www.youtube.com/watch?v=Hoixgm4-P4M
+
 
 
 
