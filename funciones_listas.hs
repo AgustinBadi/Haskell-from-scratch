@@ -125,5 +125,15 @@ takeWhile' :: (a -> Bool) -> [a] -> [a]
 takeWhile' f (x:xs) = if f x then x:takeWhile' f xs else []
 
 
+-- Aplica una función transversalmente a una lista de derecha a izquierda tomando un valor inicial
+foldl' :: (t -> t -> t) -> t -> [t] -> t
+foldl' f a [x] = f a x
+foldl' f a (x:xs) = foldl' f (f a x) xs 
+
+-- Aplica una función transversalmente a una lista de izquierda a derecha tomando un valor inicial
+foldr' :: (t -> t -> t) -> t -> [t] -> t
+foldr' f a [x] = f a x
+foldr' f a lst = foldr' f (f a (last lst)) (init lst)
+
 
 
