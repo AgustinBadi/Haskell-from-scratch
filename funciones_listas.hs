@@ -168,3 +168,11 @@ intersperse' a (x:xs) = x:a:intersperse' a xs
 -- Intercala una lista en un conjunto de listas
 intercalate' xs [x] = x
 intercalate' xs (y:ys) = y ++ xs ++ intercalate' xs ys 
+
+-- De una listas de listas junta los elementos de indices respectivos en una nueva lista de listas
+trans lst a
+     | a == largo = [[]]
+     | otherwise = [ x !! a | x <- lst, length x > a] : trans lst (a+1)
+     where largo = length lst
+transpose' lst = filter (/=[]) $ trans lst 0 
+
