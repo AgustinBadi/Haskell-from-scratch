@@ -159,3 +159,12 @@ nub' [] = []
 nub' (x:xs)
  | elem x xs = nub' xs
  | otherwise = x : nub' xs
+
+-- Intercala un elemento a lo largo de una lista
+intersperse' :: a -> [a] -> [a]
+intersperse' a [] = []
+intersperse' a (x:xs) = x:a:intersperse' a xs
+
+-- Intercala una lista en un conjunto de listas
+intercalate' xs [x] = x
+intercalate' xs (y:ys) = y ++ xs ++ intercalate' xs ys 
