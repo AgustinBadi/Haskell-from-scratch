@@ -125,15 +125,37 @@ takeWhile' :: (a -> Bool) -> [a] -> [a]
 takeWhile' f (x:xs) = if f x then x:takeWhile' f xs else []
 
 
--- Aplica una función transversalmente a una lista de derecha a izquierda tomando un valor inicial
-foldl' :: (t -> t -> t) -> t -> [t] -> t
+-- Aplica una función transversalmente a una lista de izquierda a derecha tomando un valor inicial.
+foldl' :: (t1 -> t2 -> t1) -> t1 -> [t2] -> t1
 foldl' f a [x] = f a x
-foldl' f a (x:xs) = foldl' f (f a x) xs 
-
--- Aplica una función transversalmente a una lista de izquierda a derecha tomando un valor inicial
-foldr' :: (t -> t -> t) -> t -> [t] -> t
-foldr' f a [x] = f a x
-foldr' f a lst = foldr' f (f a (last lst)) (init lst)
+foldl' f a (x:xs) = foldl' f (f a x) xs
 
 
+-- Aplica una función transversalmente a una lista de derecha a izquierda tomando un valor inicial.
+foldr' :: (a -> t -> t) -> t -> [a] -> t
+foldr' f a [x] = f x a
+foldr' f a lst = foldr' f (f (last lst) a) (init lst)
 
+
+-- Aplica una función transversalmente a una lista de izquierda a derecha tomando el primer valor de la lista
+foldl1' :: (t2 -> t2 -> t2) -> [t2] -> t2
+foldl1' f (x:xs) = foldl' f x xs
+
+-- Aplica una función transversalmente a una lista de derecha a izquierda tomando el primer valor de la lista
+foldr1' :: (a -> a -> a) -> [a] -> a
+foldr1' f lst  = foldr' f (last lst) (init lst)
+
+-- Aplica una función transversalmente a una lista de derecha a izquierda mostrando todos los estados intermedios
+scanl' f a [] = [a]
+scanl' f a (x:xs) = let operacion = f a x in a : scanl' f operacion xs
+
+-- Aplica una función transversalmente a una lista de derecha a izquierda mostrando todos los estados intermedios
+rigth f a [] = [a]
+rigth f a lst = let operacion = f (last lst) a in a : rigth f operacion (init lst)
+scanr' = \f a lst -> reverse (rigth f a lst) 
+
+-- Retorna la lista sin elementos duplicados
+nub' [] = []
+nub' (x:xs)
+ | elem x xs = nub' xs
+ | otherwise = x : nub' xs
