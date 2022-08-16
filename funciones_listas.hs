@@ -155,6 +155,7 @@ rigth f a lst = let operacion = f (last lst) a in a : rigth f operacion (init ls
 scanr' = \f a lst -> reverse (rigth f a lst) 
 
 -- Retorna la lista sin elementos duplicados
+nub' :: Eq a => [a] -> [a]
 nub' [] = []
 nub' (x:xs)
  | elem x xs = nub' xs
@@ -170,9 +171,55 @@ intercalate' xs [x] = x
 intercalate' xs (y:ys) = y ++ xs ++ intercalate' xs ys 
 
 -- De una listas de listas junta los elementos de indices respectivos en una nueva lista de listas
+trans :: [[a]] -> Int -> [[a]]
+transpose' :: Eq a => [[a]] -> [[a]]
 trans lst a
      | a == largo = [[]]
      | otherwise = [ x !! a | x <- lst, length x > a] : trans lst (a+1)
      where largo = length lst
 transpose' lst = filter (/=[]) $ trans lst 0 
+
+-- Concatena las listas dentro de una lista
+concat' :: [[a]] -> [a]
+concat' [] = []
+concat' (x:xs) = x ++ concat xs
+
+-- Aplica una función map a una lista de listas y luego concatena el resultado
+concatMap' :: (t -> [a]) -> [t] -> [a]
+concatMap' f lst = let iteracion = [ f x | x <- lst ] in concat' iteracion
+
+-- Revisa en una lista si todos los valores son True
+and' :: [Bool] -> Bool
+and' [x] = x
+and' (x:xs) = x && and' xs 
+
+-- Revisa en una lista si algún valor es True
+or' :: [Bool] -> Bool
+or' [x] = x
+or' (x:xs) = x || or' xs 
+
+-- Revisa si algún elemento de la lista satisface el predicado o condición
+any' :: (a -> Bool) -> [a] -> Bool
+any' f [] = False
+any' f (x:xs) = if f x then True else any' f xs 
+
+-- Revisa si todos los elementos de la lista satisfacen el predicado o condición
+all' :: (a -> Bool) -> [a] -> Bool
+all' f [] = True
+all' f (x:xs) = if f x == False then False else all' f xs
+
+-- Itera una función sobre un valor inicial infinitamente en una lista.
+iterate' :: (t -> t) -> t -> [t] 
+iterate' f a = f a : iterate' f (f a)
+
+-- Divide la lista en el indice x
+splitAt' :: Int -> [t] -> ([t],[t])
+splitAt' x lst  
+ | x > largo = (lst,[])
+ | otherwise = ([ lst !! i | i <- [0,1..x-1]],[lst !! i | i <- [x..largo-1]])
+ where largo = length lst
+
+-- Mientras se cumpla la condición elimina n elementos de la lista
+dropWhile' :: (t -> Bool) -> [t] -> [t]
+dropWhile' f (x:xs) = if f x then dropWhile' f xs else xs
 
