@@ -1,5 +1,6 @@
 -- Implementación funciones de listas 
 
+
 -- retorna el primer elemento
 head' :: [a] -> a
 head' xs = xs !! 0
@@ -95,15 +96,18 @@ repeat' x = [x,x..x]
 replicate' :: (Num t, Enum t) => t -> a -> [a]
 replicate' a x = [x | _ <- [1..a] ]
 
+
 -- Elimina solo el primer elemento de una lista que corresponda a x
 delete' :: Eq a => a -> [a] -> [a]
 delete' _ [] = []
 delete' a (x:xs) = if a == x then xs else x:(delete' a xs)
 -- delete' a (x:xs) = if a /= x then x:(delete' a xs) else xs
 
+
 -- Aplica una función a una lista
 map' :: (t -> a) -> [t] -> [a]
 map' f lst = [ f x | x <- lst ]
+
 
 -- Sobre los elementos respectivos de dos listas aplica una función
 zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]
@@ -141,18 +145,22 @@ foldr' f a lst = foldr' f (f (last lst) a) (init lst)
 foldl1' :: (t2 -> t2 -> t2) -> [t2] -> t2
 foldl1' f (x:xs) = foldl' f x xs
 
+
 -- Aplica una función transversalmente a una lista de derecha a izquierda tomando el primer valor de la lista
 foldr1' :: (a -> a -> a) -> [a] -> a
 foldr1' f lst  = foldr' f (last lst) (init lst)
+
 
 -- Aplica una función transversalmente a una lista de derecha a izquierda mostrando todos los estados intermedios
 scanl' f a [] = [a]
 scanl' f a (x:xs) = let operacion = f a x in a : scanl' f operacion xs
 
+
 -- Aplica una función transversalmente a una lista de derecha a izquierda mostrando todos los estados intermedios
 rigth f a [] = [a]
 rigth f a lst = let operacion = f (last lst) a in a : rigth f operacion (init lst)
 scanr' = \f a lst -> reverse (rigth f a lst) 
+
 
 -- Retorna la lista sin elementos duplicados
 nub' :: Eq a => [a] -> [a]
@@ -161,14 +169,17 @@ nub' (x:xs)
  | elem x xs = nub' xs
  | otherwise = x : nub' xs
 
+
 -- Intercala un elemento a lo largo de una lista
 intersperse' :: a -> [a] -> [a]
 intersperse' a [] = []
 intersperse' a (x:xs) = x:a:intersperse' a xs
 
+
 -- Intercala una lista en un conjunto de listas
 intercalate' xs [x] = x
 intercalate' xs (y:ys) = y ++ xs ++ intercalate' xs ys 
+
 
 -- De una listas de listas junta los elementos de indices respectivos en una nueva lista de listas
 trans :: [[a]] -> Int -> [[a]]
@@ -179,29 +190,35 @@ trans lst a
      where largo = length lst
 transpose' lst = filter (/=[]) $ trans lst 0 
 
+
 -- Concatena las listas dentro de una lista
 concat' :: [[a]] -> [a]
 concat' [] = []
 concat' (x:xs) = x ++ concat xs
 
+
 -- Aplica una función map a una lista de listas y luego concatena el resultado
 concatMap' :: (t -> [a]) -> [t] -> [a]
 concatMap' f lst = let iteracion = [ f x | x <- lst ] in concat' iteracion
+
 
 -- Revisa en una lista si todos los valores son True
 and' :: [Bool] -> Bool
 and' [x] = x
 and' (x:xs) = x && and' xs 
 
+
 -- Revisa en una lista si algún valor es True
 or' :: [Bool] -> Bool
 or' [x] = x
 or' (x:xs) = x || or' xs 
 
+
 -- Revisa si algún elemento de la lista satisface el predicado o condición
 any' :: (a -> Bool) -> [a] -> Bool
 any' f [] = False
 any' f (x:xs) = if f x then True else any' f xs 
+
 
 -- Revisa si todos los elementos de la lista satisfacen el predicado o condición
 all' :: (a -> Bool) -> [a] -> Bool
@@ -212,6 +229,7 @@ all' f (x:xs) = if f x == False then False else all' f xs
 iterate' :: (t -> t) -> t -> [t] 
 iterate' f a = f a : iterate' f (f a)
 
+
 -- Divide la lista en el indice x
 splitAt' :: Int -> [t] -> ([t],[t])
 splitAt' x lst  
@@ -219,7 +237,23 @@ splitAt' x lst
  | otherwise = ([ lst !! i | i <- [0,1..x-1]],[lst !! i | i <- [x..largo-1]])
  where largo = length lst
 
+
 -- Mientras se cumpla la condición elimina n elementos de la lista
 dropWhile' :: (t -> Bool) -> [t] -> [t]
 dropWhile' f (x:xs) = if f x then dropWhile' f xs else xs
+
+
+-- Cuando deja de cumplirse la condición se divide la lista en el indice respectivo
+span' :: (a -> Bool) -> [a] -> ([a], [a])
+span' f lst = (par1, drop splitPoint lst)
+ where par1 = takeWhile' f lst 
+       splitPoint = length par1 - 1
+
+
+-- Cuando se cumple la condición se divide la lista en el indice respectivo
+break' :: (a -> Bool) -> [a] -> ([a], [a])
+break' f lst = let indice = length (ciclo f lst) in splitAt' indice lst
+ where ciclo f (x:xs) = if not (f x) then x : ciclo f xs else [] 
+
+
 
