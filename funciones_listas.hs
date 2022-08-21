@@ -257,6 +257,8 @@ break' f lst = let indice = length (ciclo f lst) in splitAt' indice lst
 
 
 -- Concatena en nuevas listas elementos adyacentes de una lista.
+findGroup :: Eq a => [a] -> [[a]]
+group' :: Eq a => [a] -> [[a]]
 findGroup [] = [[]]
 findGroup (x:xs) = [ciclo] ++ findGroup (drop (length ciclo - 1) xs)
  where ciclo = x : [ y | y <- xs, y == x]
