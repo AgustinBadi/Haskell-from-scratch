@@ -264,10 +264,27 @@ findGroup (x:xs) = [ciclo] ++ findGroup (drop (length ciclo - 1) xs)
  where ciclo = x : [ y | y <- xs, y == x]
 group' lst = init $ findGroup lst
 
+
 -- Recursivamente aplica la función init
 inits' :: [a] -> [[a]]
 inits' lst = let largo = length lst in [take x lst | x <- [0..largo]]
 
+
 -- Recursivamente aplica la función tail
 tails' :: [a] -> [[a]]
 tails' lst = let largo = length lst in [drop x lst | x <- [0..largo]]
+
+
+-- Revisa si es verdad si una lista es sublista de otra mas grande
+isInfixOf' :: Eq a => [a] -> [a] -> Bool
+isInfixOf' xs ys = or' $ map (==xs) $ map (take (length' xs)) (tails' ys)
+
+-- Revisa si es verdad si una lista es prefijo de otra
+isPrefixOf' :: Eq a => [a] -> [a] -> Bool
+isPrefixOf'  xs ys = if xs == take (length xs) ys then True else False
+
+-- Revisa si es verdad si una lista es sufijo de otra
+isSuffixOf' :: Eq a => [a] -> [a] -> Bool
+isSuffixOf'  xs ys = if xs == drop (length ys - length xs) ys then True else False
+
+
