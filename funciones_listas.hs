@@ -264,3 +264,10 @@ findGroup (x:xs) = [ciclo] ++ findGroup (drop (length ciclo - 1) xs)
  where ciclo = x : [ y | y <- xs, y == x]
 group' lst = init $ findGroup lst
 
+-- Recursivamente aplica la función init
+inits' :: [a] -> [[a]]
+inits' lst = let largo = length lst in [take x lst | x <- [0..largo]]
+
+-- Recursivamente aplica la función tail
+tails' :: [a] -> [[a]]
+tails' lst = let largo = length lst in [drop x lst | x <- [0..largo]]
