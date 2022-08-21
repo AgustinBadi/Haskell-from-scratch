@@ -288,3 +288,22 @@ isSuffixOf' :: Eq a => [a] -> [a] -> Bool
 isSuffixOf'  xs ys = if xs == drop (length ys - length xs) ys then True else False
 
 
+-- Verifica si es verdad que un elemento NO está en la lista
+notElem' x xs = not $ elem x xs
+
+
+-- Es equivalente a \\ donde a partir de una lista se eliminan aquellos elementos que corresponden a una sublista
+(//) :: (Foldable t, Eq a) => [a] -> t a -> [a]
+(//) [] _ = []
+(//) (x:xs) ys = if notElem' x ys then x:(//) xs ys else (//) xs ys
+
+
+-- Dado un predicado divide la lista en una tupla entre aquello que satisface el predicado 
+partition' :: Eq a => (a -> Bool) -> [a] -> ([a], [a])
+partition' f xs = (parte, xs // parte )
+ where parte = [ x | x <- xs, f x]
+
+
+
+
+
