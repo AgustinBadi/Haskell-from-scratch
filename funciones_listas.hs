@@ -253,7 +253,9 @@ span' f lst = (par1, drop splitPoint lst)
 -- Cuando se cumple la condición se divide la lista en el indice respectivo
 break' :: (a -> Bool) -> [a] -> ([a], [a])
 break' f lst = let indice = length (ciclo f lst) in splitAt' indice lst
- where ciclo f (x:xs) = if not (f x) then x : ciclo f xs else [] 
+ where ciclo _ [] = []
+       ciclo f (x:xs) = if not (f x) then x : ciclo f xs else []
+
 
 
 -- Concatena en nuevas listas elementos adyacentes de una lista.
@@ -303,7 +305,14 @@ partition' :: Eq a => (a -> Bool) -> [a] -> ([a], [a])
 partition' f xs = (parte, xs // parte )
  where parte = [ x | x <- xs, f x]
 
+-- Find (Requiere entendimiento monadas)
 
+-- elemIndex (Requiere entendimiento monadas)
 
+-- elemIndices (Requiere entendimiento monadas)
 
+-- findIndex (Requiere entendimiento monadas)
 
+-- Crea una lista con sublistas para cada salto de linea de una cadena 
+lines' lst = (fst corte) :  lines (delete' '\n' $ snd corte)
+ where corte = break' (=='\n') lst
