@@ -316,3 +316,6 @@ partition' f xs = (parte, xs // parte )
 -- Crea una lista con sublistas para cada salto de linea de una cadena 
 lines' lst = (fst corte) :  lines (delete' '\n' $ snd corte)
  where corte = break' (=='\n') lst
+
+unlines' [] = ""
+unlines' (x:xs) = x ++ "\n" ++ unlines' xs                
