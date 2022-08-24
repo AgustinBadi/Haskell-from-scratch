@@ -314,8 +314,22 @@ partition' f xs = (parte, xs // parte )
 -- findIndex (Requiere entendimiento monadas)
 
 -- Crea una lista con sublistas para cada salto de linea de una cadena 
+lines' :: [Char] -> [[Char]]
 lines' lst = (fst corte) :  lines (delete' '\n' $ snd corte)
  where corte = break' (=='\n') lst
 
+-- Retorna una cada cadena con un salto de linea para cada sublista
+unlines' :: [[Char]] -> [Char]
 unlines' [] = ""
 unlines' (x:xs) = x ++ "\n" ++ unlines' xs                
+
+-- Crea sublistas para cada palabra de la lista
+words' :: [Char] -> [[Char]]
+words' [] = []
+words' lst = let ciclo = break (==' ') lst
+    in fst ciclo : words' ( delete' ' ' $ snd ciclo)
+
+-- Une cada palabra de la lista en una misma cadena
+unwords' :: [[Char]] -> [Char]
+unwords' [x] = x
+unwords' (x:xs) = x ++ " " ++ unwords' xs
