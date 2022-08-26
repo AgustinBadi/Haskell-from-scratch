@@ -305,23 +305,30 @@ partition' :: Eq a => (a -> Bool) -> [a] -> ([a], [a])
 partition' f xs = (parte, xs // parte )
  where parte = [ x | x <- xs, f x]
 
+
 -- Find (Requiere entendimiento monadas)
+
 
 -- elemIndex (Requiere entendimiento monadas)
 
+
 -- elemIndices (Requiere entendimiento monadas)
 
+
 -- findIndex (Requiere entendimiento monadas)
+
 
 -- Crea una lista con sublistas para cada salto de linea de una cadena 
 lines' :: [Char] -> [[Char]]
 lines' lst = (fst corte) :  lines (delete' '\n' $ snd corte)
  where corte = break' (=='\n') lst
 
+
 -- Retorna una cada cadena con un salto de linea para cada sublista
 unlines' :: [[Char]] -> [Char]
 unlines' [] = ""
 unlines' (x:xs) = x ++ "\n" ++ unlines' xs                
+
 
 -- Crea sublistas para cada palabra de la lista
 words' :: [Char] -> [[Char]]
@@ -329,7 +336,25 @@ words' [] = []
 words' lst = let ciclo = break (==' ') lst
     in fst ciclo : words' ( delete' ' ' $ snd ciclo)
 
+
 -- Une cada palabra de la lista en una misma cadena
 unwords' :: [[Char]] -> [Char]
 unwords' [x] = x
 unwords' (x:xs) = x ++ " " ++ unwords' xs
+
+
+-- Recorre una primera lista y agrega los elementos de la segunda que no se encuentren
+unn' :: Eq a => [a] -> [a] -> [a]
+union' :: Eq a => [a] -> [a] -> [a]
+unn' _ [] = []
+unn' [] ys = ys
+unn' xs (y:ys) = let ciclo = and' $ map (/=y) xs 
+    in if ciclo then [y] ++ unn' xs ys else unn' xs ys
+union' xs ys = xs ++ unn' xs ys 
+
+
+-- Crea una lista a partir de los elementos comunes de otras dos listas
+intersect' :: Eq a => [a] -> [a] -> [a]
+intersect' _ [] = []
+intersect' [] _ = []
+intersect' (x:xs) ys = if elem' x ys then x : intersect' xs ys else intersect' xs ys
