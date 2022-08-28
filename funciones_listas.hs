@@ -358,3 +358,11 @@ intersect' :: Eq a => [a] -> [a] -> [a]
 intersect' _ [] = []
 intersect' [] _ = []
 intersect' (x:xs) ys = if elem' x ys then x : intersect' xs ys else intersect' xs ys
+
+
+-- Recorre la lista e inserta el elemento cuando exista un elemento mayor o igual
+insert' :: Ord a => a -> [a] -> [a]
+insert' x [] = x:[]
+insert' x (y:ys)
+ | x > y = y : insert' x ys 
+ | x <= y = x : y : ys
